@@ -10,6 +10,26 @@
   padding: 0 30px;
   background-color: #fafafa;
   border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  border-right: 1px solid rgba(0, 0, 0, 0.12);
+  border-left: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.shoppingCartCard_Container {
+  width: 500px;
+}
+
+.ShoppingCartCard_root {
+  display: flex;
+  padding: 5px;
+}
+
+.ShoppingCartCard_image {
+  width: 50%;
+}
+
+.ShoppingCartCard_details {
+  flex-grow: 1;
+  width: 300px;
 }
 
 .coverPost {
@@ -61,6 +81,11 @@
   justify-content: space-between;
   height: 400px;
   /* flex-grow: 3; */
+}
+
+.MediaCard_image {
+  height: 400px;
+  /* width: 100%; */
 }
 
 .mediaCard_button {

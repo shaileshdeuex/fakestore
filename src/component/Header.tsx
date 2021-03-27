@@ -1,7 +1,6 @@
 import {
   AppBar,
   Badge,
-  Drawer,
   IconButton,
   Toolbar,
   Typography,
@@ -9,13 +8,14 @@ import {
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 
 type HeaderProp = {
+  cartCount: number;
   sideDrawer: boolean;
   handleDrawer: (input: boolean) => void;
 };
 
-function Header({ sideDrawer, handleDrawer }: HeaderProp) {
+function Header({ cartCount, sideDrawer, handleDrawer }: HeaderProp) {
   return (
-    <AppBar position="relative" elevation={0}>
+    <AppBar position="sticky" elevation={0}>
       <Toolbar className="header_menuBar">
         <Typography variant="h6" color="textPrimary">
           Fake Store
@@ -24,17 +24,10 @@ function Header({ sideDrawer, handleDrawer }: HeaderProp) {
           aria-label="add to shopping cart"
           onClick={() => handleDrawer(true)}
         >
-          <Badge badgeContent={17} color="secondary">
+          <Badge badgeContent={cartCount} color="secondary">
             <AddShoppingCartIcon />
           </Badge>
         </IconButton>
-        <Drawer
-          anchor="right"
-          open={sideDrawer}
-          onClose={() => handleDrawer(false)}
-        >
-          Hello from Drawer!
-        </Drawer>
       </Toolbar>
     </AppBar>
   );
