@@ -6,6 +6,7 @@ import {
   Grid,
   LinearProgress,
   Drawer,
+  Typography,
 } from "@material-ui/core";
 import Header from "./component/Header";
 
@@ -15,6 +16,7 @@ import "./App.css";
 import CoverPost from "./component/CoverPost";
 import MediaCard from "./component/CardComponent";
 import ShoppingCartCard from "./component/ShoppingCartCard";
+import Footer from "./component/Footer";
 
 export type CardItemType = {
   id: number;
@@ -69,42 +71,37 @@ function App() {
     return includs;
   };
 
-  const increaseQty = (id: number) => {
-    setcart(
-      cart.map((item) => {
-        if (item.id === id) {
-          item.itemQty += 1;
-        }
-        return item;
-      })
-    );
+  const addOrRemoveQty = (
+    item: ShoppingCart,
+    id: number,
+    action: "add" | "remove"
+  ) => {
+    if (item.id === id) {
+      if (action === "add") {
+        item.itemQty += 1;
+      } else if (action === "remove") {
+        item.itemQty -= 1;
+      }
+    }
+    return item;
   };
-  const decreaseQty = (id: number, qty: number) => {
-    if (qty === 1) {
+
+  const increaseQty = (id: number) => {
+    setcart(cart.map((item) => addOrRemoveQty(item, id, "add")));
+  };
+
+  const decreaseQty = (id: number, qty: number, removeProduct: boolean) => {
+    if (qty === 1 || removeProduct) {
       setcart(cart.filter((item) => item.id !== id));
     } else {
-      setcart(
-        cart.map((item) => {
-          if (item.id === id) {
-            item.itemQty -= 1;
-          }
-          return item;
-        })
-      );
+      setcart(cart.map((item) => addOrRemoveQty(item, id, "remove")));
     }
   };
 
   const addToCart = (cartItem: CardItemType) => {
     const { id, title, image, price } = cartItem;
     if (cartIncluds(id)) {
-      setcart(
-        cart.map((item) => {
-          if (item.id === id) {
-            item.itemQty += 1;
-          }
-          return item;
-        })
-      );
+      setcart(cart.map((item) => addOrRemoveQty(item, id, "add")));
     } else {
       setcart([...cart, { id, itemQty: 1, itemName: title, image, price }]);
     }
@@ -113,6 +110,7 @@ function App() {
   const handleDrawer = (open: boolean) => {
     setsideDrawer(open);
   };
+
   return (
     <>
       <CssBaseline />
@@ -128,14 +126,23 @@ function App() {
           onClose={() => handleDrawer(false)}
         >
           <div className="shoppingCartCard_Container">
-            {cart.map((item, id) => (
-              <ShoppingCartCard
-                key={id}
-                item={item}
-                increaseQty={increaseQty}
-                decreaseQty={decreaseQty}
-              />
-            ))}
+            {cart.length ? (
+              cart.map((item, id) => (
+                <ShoppingCartCard
+                  key={id}
+                  cartId={id}
+                  item={item}
+                  increaseQty={increaseQty}
+                  decreaseQty={decreaseQty}
+                />
+              ))
+            ) : (
+              <div className="noCartItem_container">
+                <Typography variant="h6" color="textSecondary">
+                  No Item Added to The Cart
+                </Typography>
+              </div>
+            )}
           </div>
         </Drawer>
         <main>
@@ -151,6 +158,7 @@ function App() {
             </Grid>
           </Container>
         </main>
+        <Footer />
       </Container>
     </>
   );

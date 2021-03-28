@@ -9,15 +9,18 @@ import {
 
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
+import DeleteIcon from "@material-ui/icons/Delete";
 import { ShoppingCart } from "../App";
 
 type ShoppingCartCardProps = {
+  cartId: number;
   item: ShoppingCart;
   increaseQty: (input: number) => void;
-  decreaseQty: (input: number, input2: number) => void;
+  decreaseQty: (input: number, input2: number, input3: boolean) => void;
 };
 
 function ShoppingCartCard({
+  cartId,
   item,
   increaseQty,
   decreaseQty,
@@ -33,13 +36,21 @@ function ShoppingCartCard({
             <strong>Price: ${price * itemQty}</strong>
           </Typography>
         </CardContent>
-        <CardActions>
-          <IconButton onClick={() => increaseQty(id)}>
-            <AddIcon />
-          </IconButton>
-          <span>{itemQty}</span>
-          <IconButton onClick={() => decreaseQty(id, itemQty)}>
-            <RemoveIcon />
+        <CardActions className="ShoppingCartCard_buttoncontainer">
+          <div>
+            <IconButton onClick={() => increaseQty(id)}>
+              <AddIcon />
+            </IconButton>
+            <span>{itemQty}</span>
+            <IconButton onClick={() => decreaseQty(id, itemQty, false)}>
+              <RemoveIcon />
+            </IconButton>
+          </div>
+          <IconButton
+            aria-label="delete"
+            onClick={() => decreaseQty(id, itemQty, true)}
+          >
+            <DeleteIcon />
           </IconButton>
         </CardActions>
       </div>

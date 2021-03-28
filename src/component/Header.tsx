@@ -17,7 +17,7 @@ function Header({ cartCount, sideDrawer, handleDrawer }: HeaderProp) {
   return (
     <AppBar position="sticky" elevation={0}>
       <Toolbar className="header_menuBar">
-        <Typography variant="h6" color="textPrimary">
+        <Typography variant="h6" color="textSecondary">
           Fake Store
         </Typography>
         <IconButton

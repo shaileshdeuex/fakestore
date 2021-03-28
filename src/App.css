@@ -32,6 +32,18 @@
   width: 300px;
 }
 
+.ShoppingCartCard_buttoncontainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.noCartItem_container {
+  height: 30vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .coverPost {
   background-image: url("https://images.unsplash.com/photo-1483985988355-763728e1935b?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80");
   position: relative;
@@ -67,7 +79,7 @@
 }
 
 .mediaCard_root {
-  height: 800px;
+  height: 700px;
   display: flex;
   max-width: 345px;
   flex-direction: column;
@@ -79,15 +91,18 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 400px;
-  /* flex-grow: 3; */
+  height: 300px;
 }
 
 .MediaCard_image {
-  height: 400px;
-  /* width: 100%; */
+  height: 300px;
 }
 
 .mediaCard_button {
   width: 100%;
+}
+
+footer {
+  background-color: #fafafa;
+  padding: 50px 0;
 }
