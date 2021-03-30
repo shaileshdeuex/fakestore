@@ -5,6 +5,7 @@ import {
   CssBaseline,
   Grid,
   LinearProgress,
+  Typography,
 } from "@material-ui/core";
 import Header from "./component/Header";
 
@@ -33,39 +34,33 @@ export type ShoppingCart = {
 };
 
 function App() {
-  const [sideDrawer, setsideDrawer] = useState(false);
-  const [cart, setcart] = useState([] as ShoppingCart[]);
+  const [sideDrawer, setSideDrawer] = useState(false);
+  const [cart, setCart] = useState([] as ShoppingCart[]);
   const [appState, setAppState] = useState({
     loading: false,
     data: [],
+    error: false,
   } as {
     loading: boolean;
     data: CardItemType[] | [];
+    error: boolean;
   });
 
   useEffect(() => {
-    setAppState({ loading: true, data: [] });
+    setAppState({ loading: true, data: [], error: false });
     const apiUrl = "https://fakestoreapi.com/products";
     fetch(apiUrl)
       .then((res) => res.json())
       .then(async (shopingData) =>
-        setAppState({ loading: false, data: shopingData })
+        setAppState({ loading: false, data: shopingData, error: false })
       )
       .catch((err) => {
-        console.log(err);
-        setAppState({ loading: false, data: [] });
+        setAppState({ loading: false, data: [], error: true });
       });
   }, [setAppState]);
 
   const cartIncluds = (id: number) => {
-    let includs = false;
-    for (const cartData of cart) {
-      if (id === cartData.id) {
-        includs = true;
-        break;
-      }
-    }
-    return includs;
+    return cart.find((item) => id === item.id);
   };
 
   const addOrRemoveQty = (
@@ -84,28 +79,28 @@ function App() {
   };
 
   const increaseQty = (id: number) => {
-    setcart(cart.map((item) => addOrRemoveQty(item, id, "add")));
+    setCart(cart.map((item) => addOrRemoveQty(item, id, "add")));
   };
 
   const decreaseQty = (id: number, qty: number, removeProduct: boolean) => {
     if (qty === 1 || removeProduct) {
-      setcart(cart.filter((item) => item.id !== id));
+      setCart(cart.filter((item) => item.id !== id));
     } else {
-      setcart(cart.map((item) => addOrRemoveQty(item, id, "remove")));
+      setCart(cart.map((item) => addOrRemoveQty(item, id, "remove")));
     }
   };
 
   const addToCart = (cartItem: CardItemType) => {
     const { id, title, image, price } = cartItem;
     if (cartIncluds(id)) {
-      setcart(cart.map((item) => addOrRemoveQty(item, id, "add")));
+      setCart(cart.map((item) => addOrRemoveQty(item, id, "add")));
     } else {
-      setcart([...cart, { id, itemQty: 1, itemName: title, image, price }]);
+      setCart([...cart, { id, itemQty: 1, itemName: title, image, price }]);
     }
   };
 
   const handleDrawer = (open: boolean) => {
-    setsideDrawer(open);
+    setSideDrawer(open);
   };
 
   return (
@@ -124,6 +119,11 @@ function App() {
           <CoverPost />
           {appState.loading && <LinearProgress />}
           <Container maxWidth="lg" className="data_container">
+            {appState.error && (
+              <Typography variant="h5" align="center" color="textSecondary">
+                There is a problem loading data. Please try again
+              </Typography>
+            )}
             <Grid container spacing={4}>
               {appState.data.map((item: CardItemType) => (
                 <Grid key={item.id} item xs={12} sm={6} md={4}>

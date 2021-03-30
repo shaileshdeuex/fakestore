@@ -1,5 +1,6 @@
-import { Drawer, Typography, Divider } from "@material-ui/core";
+import { Drawer, Typography, Divider, IconButton } from "@material-ui/core";
 import ShoppingCartCard from "./ShoppingCartCard";
+import CloseIcon from "@material-ui/icons/Close";
 
 //styles
 import "../App.css";
@@ -19,6 +20,9 @@ function CartDrawer({
       onClose={() => handleDrawer(false)}
     >
       <div className="shoppingCartCard_Container">
+        <IconButton onClick={() => handleDrawer(false)}>
+          <CloseIcon />
+        </IconButton>
         {cart.length ? (
           <>
             <div className="shoppingCartTotal">
