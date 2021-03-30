@@ -5,8 +5,6 @@ import {
   CssBaseline,
   Grid,
   LinearProgress,
-  Drawer,
-  Typography,
 } from "@material-ui/core";
 import Header from "./component/Header";
 
@@ -15,7 +13,6 @@ import "./App.css";
 
 import CoverPost from "./component/CoverPost";
 import MediaCard from "./component/CardComponent";
-import ShoppingCartCard from "./component/ShoppingCartCard";
 import Footer from "./component/Footer";
 
 export type CardItemType = {
@@ -116,35 +113,13 @@ function App() {
       <CssBaseline />
       <Container maxWidth="lg">
         <Header
-          cartCount={cart.reduce((pre, curr) => pre + curr.itemQty, 0)}
+          cart={cart}
           sideDrawer={sideDrawer}
           handleDrawer={handleDrawer}
+          increaseQty={increaseQty}
+          decreaseQty={decreaseQty}
         />
-        <Drawer
-          anchor="right"
-          open={sideDrawer}
-          onClose={() => handleDrawer(false)}
-        >
-          <div className="shoppingCartCard_Container">
-            {cart.length ? (
-              cart.map((item, id) => (
-                <ShoppingCartCard
-                  key={id}
-                  cartId={id}
-                  item={item}
-                  increaseQty={increaseQty}
-                  decreaseQty={decreaseQty}
-                />
-              ))
-            ) : (
-              <div className="noCartItem_container">
-                <Typography variant="h6" color="textSecondary">
-                  No Item Added to The Cart
-                </Typography>
-              </div>
-            )}
-          </div>
-        </Drawer>
+
         <main>
           <CoverPost />
           {appState.loading && <LinearProgress />}

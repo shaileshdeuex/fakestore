@@ -20,7 +20,7 @@
 
 .ShoppingCartCard_root {
   display: flex;
-  padding: 5px;
+  padding: 10px 0;
 }
 
 .ShoppingCartCard_image {
@@ -35,6 +35,12 @@
 .ShoppingCartCard_buttoncontainer {
   display: flex;
   justify-content: space-between;
+}
+
+.shoppingCartTotal {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
 }
 
 .noCartItem_container {
