@@ -54,7 +54,7 @@ function App() {
       .then(async (shopingData) =>
         setAppState({ loading: false, data: shopingData, error: false })
       )
-      .catch((err) => {
+      .catch(() => {
         setAppState({ loading: false, data: [], error: true });
       });
   }, [setAppState]);
@@ -106,7 +106,7 @@ function App() {
   return (
     <>
       <CssBaseline />
-      <Container maxWidth="lg">
+      <Container maxWidth="lg" data-testid="mainContainer">
         <Header
           cart={cart}
           sideDrawer={sideDrawer}
