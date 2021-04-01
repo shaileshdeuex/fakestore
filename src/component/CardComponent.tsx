@@ -21,7 +21,7 @@ export default function MediaCard({ item, addToCart }: MediaCardProps) {
   const { category, description, image, price, title } = item;
   return (
     <Card className="mediaCard_root">
-      <CardActionArea style={{ flexGrow: 3 }} className="mediaCard_body">
+      <CardActionArea className="mediaCard_body">
         <CardMedia className="MediaCard_image" image={image} />
         <CardContent className="mediaCard_body">
           <div>
@@ -30,10 +30,15 @@ export default function MediaCard({ item, addToCart }: MediaCardProps) {
             </Typography>
             <Typography variant="caption">{category}</Typography>
           </div>
-          <Typography variant="body2" color="textSecondary" component="p">
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            component="p"
+            data-testid="description"
+          >
             {displayLimitedChar(description, 200)}
           </Typography>
-          <Typography gutterBottom variant="h5">
+          <Typography gutterBottom variant="h5" data-testid="price">
             <strong>Price: ${price}</strong>
           </Typography>
         </CardContent>
@@ -43,6 +48,7 @@ export default function MediaCard({ item, addToCart }: MediaCardProps) {
           size="small"
           color="primary"
           className="mediaCard_button"
+          data-testid="addToCartBtn"
           onClick={() => addToCart(item)}
         >
           Add To Cart

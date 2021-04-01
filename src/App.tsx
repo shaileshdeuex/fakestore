@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import {
   Container,
@@ -33,6 +33,12 @@ export type ShoppingCart = {
   price: number;
 };
 
+export type AppData = {
+  loading: boolean;
+  data: CardItemType[] | [];
+  error: boolean;
+};
+
 function App() {
   const [sideDrawer, setSideDrawer] = useState(false);
   const [cart, setCart] = useState([] as ShoppingCart[]);
@@ -40,13 +46,9 @@ function App() {
     loading: false,
     data: [],
     error: false,
-  } as {
-    loading: boolean;
-    data: CardItemType[] | [];
-    error: boolean;
-  });
+  } as AppData);
 
-  useEffect(() => {
+  React.useEffect(() => {
     setAppState({ loading: true, data: [], error: false });
     const apiUrl = "https://fakestoreapi.com/products";
     fetch(apiUrl)
@@ -54,7 +56,7 @@ function App() {
       .then(async (shopingData) =>
         setAppState({ loading: false, data: shopingData, error: false })
       )
-      .catch((err) => {
+      .catch(() => {
         setAppState({ loading: false, data: [], error: true });
       });
   }, [setAppState]);
@@ -106,7 +108,7 @@ function App() {
   return (
     <>
       <CssBaseline />
-      <Container maxWidth="lg">
+      <Container maxWidth="lg" data-testid="mainContainer">
         <Header
           cart={cart}
           sideDrawer={sideDrawer}
@@ -117,10 +119,15 @@ function App() {
 
         <main>
           <CoverPost />
-          {appState.loading && <LinearProgress />}
+          {appState.loading && <LinearProgress data-testid="loading" />}
           <Container maxWidth="lg" className="data_container">
             {appState.error && (
-              <Typography variant="h5" align="center" color="textSecondary">
+              <Typography
+                variant="h5"
+                align="center"
+                color="textSecondary"
+                data-testid="errorScreen"
+              >
                 There is a problem loading data. Please try again
               </Typography>
             )}

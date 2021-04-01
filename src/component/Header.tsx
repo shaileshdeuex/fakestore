@@ -25,13 +25,14 @@ function Header({
   decreaseQty,
 }: HeaderProp) {
   return (
-    <AppBar position="sticky" elevation={0}>
+    <AppBar position="sticky" elevation={0} data-testid="header">
       <Toolbar className="header_menuBar">
         <Typography variant="h6" color="textSecondary">
           Fake Store
         </Typography>
         <IconButton
           aria-label="add to shopping cart"
+          data-testid="addToCartIcon"
           onClick={() => handleDrawer(true)}
         >
           <Badge

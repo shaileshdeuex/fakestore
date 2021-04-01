@@ -18,14 +18,15 @@ function CartDrawer({
       anchor="right"
       open={sideDrawer}
       onClose={() => handleDrawer(false)}
+      data-testid="drawer"
     >
       <div className="shoppingCartCard_Container">
-        <IconButton onClick={() => handleDrawer(false)}>
+        <IconButton data-testid="closeIcon" onClick={() => handleDrawer(false)}>
           <CloseIcon />
         </IconButton>
         {cart.length ? (
           <>
-            <div className="shoppingCartTotal">
+            <div className="shoppingCartTotal" data-testid="totalAmount">
               <Typography variant="h5">Total</Typography>
               <Typography variant="h5">
                 $
@@ -46,7 +47,7 @@ function CartDrawer({
             ))}
           </>
         ) : (
-          <div className="noCartItem_container">
+          <div className="noCartItem_container" data-testid="noItemDiv">
             <Typography variant="h6" color="textSecondary">
               No Item Added to The Cart
             </Typography>

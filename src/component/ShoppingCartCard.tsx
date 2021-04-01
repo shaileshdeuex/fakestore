@@ -27,7 +27,7 @@ function ShoppingCartCard({
 }: ShoppingCartCardProps) {
   const { id, itemQty, itemName, image, price } = item;
   return (
-    <Card className="ShoppingCartCard_root">
+    <Card className="ShoppingCartCard_root" data-testid="cardContainer">
       <CardMedia image={image} className="ShoppingCartCard_image" />
       <div className="ShoppingCartCard_details">
         <CardContent>
@@ -38,16 +38,22 @@ function ShoppingCartCard({
         </CardContent>
         <CardActions className="ShoppingCartCard_buttoncontainer">
           <div>
-            <IconButton onClick={() => increaseQty(id)}>
+            <IconButton
+              onClick={() => increaseQty(id)}
+              data-testid="increaseQty"
+            >
               <AddIcon />
             </IconButton>
             <span>{itemQty}</span>
-            <IconButton onClick={() => decreaseQty(id, itemQty, false)}>
+            <IconButton
+              data-testid="decreaseQty"
+              onClick={() => decreaseQty(id, itemQty, false)}
+            >
               <RemoveIcon />
             </IconButton>
           </div>
           <IconButton
-            aria-label="delete"
+            data-testid="deleteItem"
             onClick={() => decreaseQty(id, itemQty, true)}
           >
             <DeleteIcon />
